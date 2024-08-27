@@ -18,6 +18,8 @@ jobs:
         run: npm install
       - name: Install jq
         run: npm install -g jq
+      - name: Install commander
+        run: npm install -g commander        
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
