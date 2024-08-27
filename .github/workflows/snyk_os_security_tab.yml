@@ -16,6 +16,8 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm install
+      - name: Install jq
+        run: apt-get update && apt-get install jq -y
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -24,7 +26,9 @@ jobs:
           args: --sarif --sarif-file-output=snyk_open_source_scan.sarif -d --severity-threshold=medium
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
+      - name: Filter SARIF file to remove license data
+        run: |
+          jq '.artifacts[].outputs[].results[] | del(.properties.license, .properties.licenses)' < snyk_open_source_scan.sarif > snyk_filtered.sarif
       - name: Upload SARIF file to GitHub Security tab
         if: success() || failure()
         uses: github/codeql-action/upload-sarif@v3
