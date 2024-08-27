@@ -19,7 +19,7 @@ jobs:
         uses: snyk/actions/node@master
         continue-on-error: true
         with:
-          command: open-source test
+          command: test
           args: --sarif-file-output=snyk_open_source_scan.sarif --severity-threshold=medium
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
