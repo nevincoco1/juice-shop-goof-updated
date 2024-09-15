@@ -1,4 +1,4 @@
-name: Snyk OS Code Scan
+name: Snyk OS Monitor
 
 on:
   workflow_dispatch:
