@@ -1,0 +1,29 @@
+name: Snyk OS Code Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  snyk_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js (if needed)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Snyk Monitor to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        with:
+          command: monitor 
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+     
