@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
         with:
           command: monitor 
-          args: --target-reference=blue-apron-demo
+          args: --remote-repo-url=blue-apron-demo
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
